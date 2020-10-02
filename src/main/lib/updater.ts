@@ -60,7 +60,7 @@ autoUpdater.on("update-downloaded", async () => {
       type: "info",
       title: "A new update is available",
       message: "Update and restart now?",
-      buttons: ["Update now", "Maybe later"],
+      buttons: ["Restart now", "Maybe later"],
     });
     if (response === 0) {
       setImmediate(() => autoUpdater.quitAndInstall(true));
