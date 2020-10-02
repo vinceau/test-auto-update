@@ -9,7 +9,7 @@ export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemCo
     label: platform === "win32" ? "File" : "Application",
     submenu: [
       {
-        label: "Check for updates",
+        label: "Check for Updates...",
         click: () => {
           autoUpdater.checkForUpdates();
         },
