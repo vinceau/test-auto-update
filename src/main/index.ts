@@ -11,7 +11,7 @@ import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
 
-import * as log from "electron-log";
+import log from "electron-log";
 import { autoUpdater } from "electron-updater";
 
 autoUpdater.logger = log;
