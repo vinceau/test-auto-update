@@ -42,7 +42,7 @@ export const App: React.FC = () => {
       </div>
       <h2>{pkg.version}</h2>
       <h2>Messages</h2>
-      <div>
+      <div style={{ wordBreak: "break-all" }}>
         {messages.map((m, i) => (
           <li key={i}>{m}</li>
         ))}
