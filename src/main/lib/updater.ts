@@ -63,7 +63,7 @@ autoUpdater.on("update-downloaded", async () => {
       buttons: ["Update now", "Maybe later"],
     });
     if (response === 0) {
-      setImmediate(() => autoUpdater.quitAndInstall());
+      setImmediate(() => autoUpdater.quitAndInstall(true));
     } else {
       updater.enabled = true;
       updater = null;
