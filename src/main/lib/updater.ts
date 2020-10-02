@@ -9,7 +9,7 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-import { BrowserWindow, dialog, MenuItem } from "electron";
+import { dialog, MenuItem } from "electron";
 // import { getStatic } from "./notifications";
 import { autoUpdater } from "electron-updater";
 
@@ -62,11 +62,7 @@ autoUpdater.on("update-downloaded", async (info: any) => {
     buttons: ["Restart now", "Maybe later"],
   });
   if (response === 0) {
-    const win = BrowserWindow.getFocusedWindow();
-    if (win) {
-      win.setClosable(true);
-    }
-    setImmediate(() => autoUpdater.quitAndInstall(true));
+    setImmediate(() => autoUpdater.quitAndInstall());
   } else if (updater) {
     updater.enabled = true;
     updater = null;
