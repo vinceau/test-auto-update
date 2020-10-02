@@ -44,7 +44,7 @@ autoUpdater.on("download-progress", (progressObj) => {
 });
 autoUpdater.on("update-downloaded", (info) => {
   console.log(`update downloaded info: `, info);
-  sendStatusToWindow(`Update downloaded: ${info}`);
+  sendStatusToWindow(`Update downloaded: ${JSON.stringify(info)}`);
   mainWindow!.webContents.send("update_downloaded");
 });
 
