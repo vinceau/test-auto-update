@@ -9,7 +9,7 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-import { dialog, MenuItem } from "electron";
+import { BrowserWindow, dialog, MenuItem } from "electron";
 // import { getStatic } from "./notifications";
 import { autoUpdater } from "electron-updater";
 
@@ -54,20 +54,22 @@ autoUpdater.on("update-not-available", async () => {
 });
 
 autoUpdater.on("update-downloaded", async () => {
-  if (updater) {
-    const { response } = await dialog.showMessageBox({
-      // icon: nativeImage.createFromPath(iconPath),
-      type: "info",
-      title: "A new update is available",
-      message: "Update and restart now?",
-      buttons: ["Restart now", "Maybe later"],
-    });
-    if (response === 0) {
-      setImmediate(() => autoUpdater.quitAndInstall(true));
-    } else {
-      updater.enabled = true;
-      updater = null;
+  const { response } = await dialog.showMessageBox({
+    // icon: nativeImage.createFromPath(iconPath),
+    type: "info",
+    title: "A new update is available",
+    message: "Update and restart now?",
+    buttons: ["Restart now", "Maybe later"],
+  });
+  if (response === 0) {
+    const win = BrowserWindow.getFocusedWindow();
+    if (win) {
+      win.setClosable(true);
     }
+    setImmediate(() => autoUpdater.quitAndInstall(true));
+  } else if (updater) {
+    updater.enabled = true;
+    updater = null;
   }
   // dialog.showMessageBoxSync({
   //   icon: nativeImage.createFromPath(iconPath),
