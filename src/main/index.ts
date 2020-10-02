@@ -129,8 +129,8 @@ const startUp = () => {
     shell.openExternal(url);
   });
 
-  // Check for updates
-  autoUpdater.checkForUpdatesAndNotify();
+  // // Check for updates
+  // autoUpdater.checkForUpdatesAndNotify();
 };
 
 if (isDevelopment) {
