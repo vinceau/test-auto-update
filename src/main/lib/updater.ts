@@ -9,20 +9,18 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-// import path from "path";
-import { dialog /*, MenuItem, nativeImage */ } from "electron";
+import { dialog, MenuItem, nativeImage } from "electron";
 import { getStatic } from "./notifications";
-// import { autoUpdater } from "electron-updater";
+import { autoUpdater } from "electron-updater";
 
 const iconPath = getStatic("/images/icon@32.png");
 
-/*
-
 let updater: MenuItem | null;
-autoUpdater.autoDownload = false;
+// autoUpdater.autoDownload = false;
 
+/*
 autoUpdater.on("error", (error) => {
-  dialog.showErrorBox("Error: ", error == null ? "unknown" : (error.stack || error).toString());
+  dialog.showErrorBox("Error: ", error === null ? "unknown" : (error.stack || error).toString());
 });
 
 autoUpdater.on("update-available", async () => {
@@ -40,39 +38,47 @@ autoUpdater.on("update-available", async () => {
     updater = null;
   }
 });
+*/
 
-autoUpdater.on("update-not-available", () => {
-  dialog.showMessageBox({
-    icon: nativeImage.createFromPath(iconPath),
-    title: "No Updates",
-    message: "Current version is up-to-date.",
-  });
+autoUpdater.on("update-not-available", async () => {
   if (updater) {
+    await dialog.showMessageBox({
+      icon: nativeImage.createFromPath(iconPath),
+      title: "No updates available",
+      message: "You're already on the latest version!",
+    });
     updater.enabled = true;
     updater = null;
   }
 });
 
 autoUpdater.on("update-downloaded", async () => {
-  await dialog.showMessageBox({
-    icon: nativeImage.createFromPath(iconPath),
-    title: "Install Updates",
-    message: "Updates downloaded, application will be quit for update...",
-  });
-  setImmediate(() => autoUpdater.quitAndInstall());
+  if (updater) {
+    const { response } = await dialog.showMessageBox({
+      icon: nativeImage.createFromPath(iconPath),
+      type: "info",
+      title: "A new update is available",
+      message: "Update and restart now?",
+      buttons: ["Update now", "Maybe later"],
+    });
+    if (response === 0) {
+      setImmediate(() => autoUpdater.quitAndInstall());
+    } else {
+      updater.enabled = true;
+      updater = null;
+    }
+  }
+  // dialog.showMessageBoxSync({
+  //   icon: nativeImage.createFromPath(iconPath),
+  //   title: "Install Updates",
+  //   message: "Updates downloaded, application will be quit for update...",
+  // });
+  // setImmediate(() => autoUpdater.quitAndInstall());
 });
-*/
 
 // export this to MenuItem click callback
-export function checkForUpdates() {
-  // updater = menuItem;
-  // updater.enabled = false;
-  // autoUpdater.checkForUpdates();
-  dialog.showMessageBoxSync({
-    icon: iconPath, // nativeImage.createFromPath(iconPath),
-    type: "info",
-    title: "Found Updates",
-    message: "Found updates, do you want update now?",
-    buttons: ["Sure", "No"],
-  });
+export function checkForUpdates(menuItem: MenuItem) {
+  updater = menuItem;
+  updater.enabled = false;
+  autoUpdater.checkForUpdates();
 }

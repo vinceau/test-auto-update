@@ -129,8 +129,8 @@ const startUp = () => {
     shell.openExternal(url);
   });
 
-  // Check for updates
-  autoUpdater.checkForUpdatesAndNotify();
+  // Check for updates on first boot but don't notify
+  autoUpdater.checkForUpdates();
 };
 
 if (isDevelopment) {
