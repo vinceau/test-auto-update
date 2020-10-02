@@ -92,6 +92,11 @@
         "AppImage"
       ],
       "category": "Office"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirector": true,
+      "createDesktopShortcut": false
     }
   },
   "husky": {
