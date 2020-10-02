@@ -13,7 +13,8 @@ export const App: React.FC = () => {
   });
   return (
     <div>
-      <h1>{pkg.version}</h1>
+      <h1>Hello world</h1>
+      <h2>{pkg.version}</h2>
       <h2>Messages</h2>
       <div>
         {messages.map((m, i) => (
