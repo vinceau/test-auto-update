@@ -9,7 +9,7 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-import path from "path";
+// import path from "path";
 import { dialog /*, MenuItem, nativeImage */ } from "electron";
 import { getStatic } from "./notifications";
 // import { autoUpdater } from "electron-updater";
