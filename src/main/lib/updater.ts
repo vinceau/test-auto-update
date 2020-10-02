@@ -11,9 +11,10 @@
 
 import path from "path";
 import { dialog /*, MenuItem, nativeImage */ } from "electron";
+import { getStatic } from "./notifications";
 // import { autoUpdater } from "electron-updater";
 
-const iconPath = path.resolve(path.join(__dirname, "../../../build/Icon-32.png"));
+const iconPath = getStatic("/images/icon@32.png");
 
 /*
 

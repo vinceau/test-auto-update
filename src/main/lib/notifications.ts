@@ -50,7 +50,7 @@ const showElectronNotification = (message: string, title: string): void => {
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-const getStatic = (val: string): string => {
+export const getStatic = (val: string): string => {
   if (isDevelopment) {
     return path.join(__dirname, "../../../static", val);
   }
