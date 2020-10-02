@@ -97,6 +97,11 @@
       ],
       "category": "Office"
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirector": true,
+      "createDesktopShortcut": false
+    },
     "portable": {
       "artifactName": "${productName} Portable ${version}.${ext}"
     }
