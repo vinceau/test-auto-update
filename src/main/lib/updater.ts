@@ -9,8 +9,13 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-import { dialog, MenuItem } from "electron";
-import { autoUpdater } from "electron-updater";
+import path from "path";
+import { dialog /*, MenuItem, nativeImage */ } from "electron";
+// import { autoUpdater } from "electron-updater";
+
+const iconPath = path.resolve(path.join(__dirname, "../../../build/Icon-32.png"));
+
+/*
 
 let updater: MenuItem | null;
 autoUpdater.autoDownload = false;
@@ -21,6 +26,7 @@ autoUpdater.on("error", (error) => {
 
 autoUpdater.on("update-available", async () => {
   const { response } = await dialog.showMessageBox({
+    icon: nativeImage.createFromPath(iconPath),
     type: "info",
     title: "Found Updates",
     message: "Found updates, do you want update now?",
@@ -36,6 +42,7 @@ autoUpdater.on("update-available", async () => {
 
 autoUpdater.on("update-not-available", () => {
   dialog.showMessageBox({
+    icon: nativeImage.createFromPath(iconPath),
     title: "No Updates",
     message: "Current version is up-to-date.",
   });
@@ -47,15 +54,24 @@ autoUpdater.on("update-not-available", () => {
 
 autoUpdater.on("update-downloaded", async () => {
   await dialog.showMessageBox({
+    icon: nativeImage.createFromPath(iconPath),
     title: "Install Updates",
     message: "Updates downloaded, application will be quit for update...",
   });
   setImmediate(() => autoUpdater.quitAndInstall());
 });
+*/
 
 // export this to MenuItem click callback
-export function checkForUpdates(menuItem: MenuItem) {
-  updater = menuItem;
-  updater.enabled = false;
-  autoUpdater.checkForUpdates();
+export function checkForUpdates() {
+  // updater = menuItem;
+  // updater.enabled = false;
+  // autoUpdater.checkForUpdates();
+  dialog.showMessageBoxSync({
+    icon: iconPath, // nativeImage.createFromPath(iconPath),
+    type: "info",
+    title: "Found Updates",
+    message: "Found updates, do you want update now?",
+    buttons: ["Sure", "No"],
+  });
 }
