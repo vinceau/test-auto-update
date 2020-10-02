@@ -25,6 +25,7 @@
     "@vinceau/event-actions": "^0.0.4",
     "@vinceau/slp-realtime": "^3.0.2",
     "electron-context-menu": "^0.15.1",
+    "electron-log": "^4.2.4",
     "electron-store": "^5.1.1",
     "electron-updater": "^4.3.5",
     "fast-glob": "^3.1.1",
@@ -84,10 +85,7 @@
       "category": "public.app-category.lifestyle"
     },
     "win": {
-      "icon": "build/icon.ico",
-      "target": [
-        "portable"
-      ]
+      "icon": "build/icon.ico"
     },
     "linux": {
       "target": [

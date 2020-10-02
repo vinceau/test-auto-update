@@ -11,10 +11,46 @@ import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
 
+import * as log from "electron-log";
+import { autoUpdater } from "electron-updater";
+
+autoUpdater.logger = log;
+
+log.info("App starting...");
+
+(autoUpdater.logger as any).transports.file.level = "info";
+
+autoUpdater.on("checking-for-update", () => {
+  sendStatusToWindow("Checking for update...");
+});
+autoUpdater.on("update-available", (info) => {
+  sendStatusToWindow("Update available.");
+});
+autoUpdater.on("update-not-available", (info) => {
+  sendStatusToWindow("Update not available.");
+});
+autoUpdater.on("error", (err) => {
+  sendStatusToWindow("Error in auto-updater. " + err);
+});
+autoUpdater.on("download-progress", (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
+  sendStatusToWindow(log_message);
+});
+autoUpdater.on("update-downloaded", (info) => {
+  sendStatusToWindow("Update downloaded");
+});
+
 contextMenu();
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: BrowserWindow | null;
+
+function sendStatusToWindow(text: string) {
+  log.info(text);
+  mainWindow!.webContents.send("message", text);
+}
 
 function createMainWindow() {
   const window = new BrowserWindow({
@@ -86,6 +122,9 @@ const startUp = () => {
     event.preventDefault();
     shell.openExternal(url);
   });
+
+  // Check for updates
+  autoUpdater.checkForUpdatesAndNotify();
 };
 
 if (isDevelopment) {
