@@ -85,7 +85,11 @@
       "category": "public.app-category.lifestyle"
     },
     "win": {
-      "icon": "build/icon.ico"
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
     },
     "linux": {
       "target": [
