@@ -101,6 +101,9 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": false
+    },
+    "portable": {
+      "artifactName": "${productName} Portable ${version}.${ext}"
     }
   },
   "husky": {
