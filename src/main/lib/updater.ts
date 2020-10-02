@@ -53,12 +53,12 @@ autoUpdater.on("update-not-available", async () => {
   }
 });
 
-autoUpdater.on("update-downloaded", async () => {
+autoUpdater.on("update-downloaded", async (info: any) => {
   const { response } = await dialog.showMessageBox({
     // icon: nativeImage.createFromPath(iconPath),
     type: "info",
-    title: "A new update is available",
-    message: "Update and restart now?",
+    title: "New update available",
+    message: `Project Clippi v${info.version} is available. Update and restart now?`,
     buttons: ["Restart now", "Maybe later"],
   });
   if (response === 0) {
