@@ -24,9 +24,11 @@ autoUpdater.on("checking-for-update", () => {
   sendStatusToWindow("Checking for update...");
 });
 autoUpdater.on("update-available", (info) => {
+  console.log(`update info: `, info);
   sendStatusToWindow("Update available.");
 });
 autoUpdater.on("update-not-available", (info) => {
+  console.log(`update not available info: `, info);
   sendStatusToWindow("Update not available.");
 });
 autoUpdater.on("error", (err) => {
@@ -39,6 +41,7 @@ autoUpdater.on("download-progress", (progressObj) => {
   sendStatusToWindow(log_message);
 });
 autoUpdater.on("update-downloaded", (info) => {
+  console.log(`update downloaded info: `, info);
   sendStatusToWindow("Update downloaded");
 });
 

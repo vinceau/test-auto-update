@@ -17,8 +17,8 @@ export const App: React.FC = () => {
       <h1>{version}</h1>
       <h2>Messages</h2>
       <div>
-        {messages.map((m) => (
-          <li>{m}</li>
+        {messages.map((m, i) => (
+          <li key={i}>{m}</li>
         ))}
       </div>
     </div>
