@@ -1,7 +1,7 @@
 {
-  "productName": "Project Clippi",
-  "name": "project-clippi",
-  "version": "1.4.3",
+  "productName": "Test App",
+  "name": "test-auto-update",
+  "version": "0.0.0",
   "description": "A Melee Automation Framework",
   "license": "MIT",
   "author": {
@@ -74,7 +74,7 @@
     }
   },
   "build": {
-    "appId": "au.id.vince.clippi",
+    "appId": "au.id.vince.test-auto-update",
     "files": [
       "build/icon.*"
     ],
