@@ -13,7 +13,7 @@ export const App: React.FC = () => {
   });
   return (
     <div>
-      <h1>Hello world</h1>
+      <h1>Hi there</h1>
       <h2>{pkg.version}</h2>
       <h2>Messages</h2>
       <div>
