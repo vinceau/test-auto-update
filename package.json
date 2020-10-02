@@ -1,7 +1,7 @@
 {
   "productName": "Test App",
   "name": "test-auto-update",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Melee Automation Framework",
   "license": "MIT",
   "author": {
