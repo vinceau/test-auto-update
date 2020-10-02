@@ -99,7 +99,7 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirector": true,
+      "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": false
     },
     "portable": {
