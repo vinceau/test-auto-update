@@ -1,11 +1,19 @@
 import { App } from "electron";
 
+import { autoUpdater } from "electron-updater";
+
 export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemConstructorOptions[] => {
   const menuItems: Electron.MenuItemConstructorOptions[] = [];
 
   const application: Electron.MenuItemConstructorOptions = {
     label: platform === "win32" ? "File" : "Application",
     submenu: [
+      {
+        label: "Check for updates",
+        click: () => {
+          autoUpdater.checkForUpdates();
+        },
+      },
       {
         label: "Quit",
         accelerator: platform === "darwin" ? "Command+Q" : undefined,

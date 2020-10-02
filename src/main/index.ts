@@ -25,16 +25,18 @@ autoUpdater.on("checking-for-update", () => {
 });
 autoUpdater.on("update-available", (info) => {
   console.log(`update info: `, info);
-  sendStatusToWindow("Update available.");
+  sendStatusToWindow(`Update available: ${JSON.stringify(info)}`);
+  mainWindow!.webContents.send("update_available");
 });
 autoUpdater.on("update-not-available", (info) => {
   console.log(`update not available info: `, info);
-  sendStatusToWindow("Update not available.");
+  sendStatusToWindow(`Update not available: ${JSON.stringify(info)}`);
 });
 autoUpdater.on("error", (err) => {
   sendStatusToWindow("Error in auto-updater. " + err);
 });
 autoUpdater.on("download-progress", (progressObj) => {
+  sendStatusToWindow(JSON.stringify(progressObj));
   let log_message = "Download speed: " + progressObj.bytesPerSecond;
   log_message = log_message + " - Downloaded " + progressObj.percent + "%";
   log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
@@ -42,7 +44,8 @@ autoUpdater.on("download-progress", (progressObj) => {
 });
 autoUpdater.on("update-downloaded", (info) => {
   console.log(`update downloaded info: `, info);
-  sendStatusToWindow("Update downloaded");
+  sendStatusToWindow(`Update downloaded: ${info}`);
+  mainWindow!.webContents.send("update_downloaded");
 });
 
 contextMenu();
