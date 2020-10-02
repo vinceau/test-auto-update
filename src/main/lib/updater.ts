@@ -9,11 +9,11 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-import { dialog, MenuItem, nativeImage } from "electron";
-import { getStatic } from "./notifications";
+import { dialog, MenuItem } from "electron";
+// import { getStatic } from "./notifications";
 import { autoUpdater } from "electron-updater";
 
-const iconPath = getStatic("/images/icon@32.png");
+// const iconPath = getStatic("/images/icon@32.png");
 
 let updater: MenuItem | null;
 // autoUpdater.autoDownload = false;
@@ -43,7 +43,8 @@ autoUpdater.on("update-available", async () => {
 autoUpdater.on("update-not-available", async () => {
   if (updater) {
     await dialog.showMessageBox({
-      icon: nativeImage.createFromPath(iconPath),
+      // icon: nativeImage.createFromPath(iconPath),
+      type: "info",
       title: "No updates available",
       message: "You're already on the latest version!",
     });
@@ -55,7 +56,7 @@ autoUpdater.on("update-not-available", async () => {
 autoUpdater.on("update-downloaded", async () => {
   if (updater) {
     const { response } = await dialog.showMessageBox({
-      icon: nativeImage.createFromPath(iconPath),
+      // icon: nativeImage.createFromPath(iconPath),
       type: "info",
       title: "A new update is available",
       message: "Update and restart now?",
