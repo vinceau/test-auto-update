@@ -1,7 +1,7 @@
 import React from "react";
 
 import pkg from "../../package.json";
-import { remote, ipcRenderer } from "electron";
+import { ipcRenderer } from "electron";
 
 export const App: React.FC = () => {
   const [messages, setMessages] = React.useState<string[]>([]);
