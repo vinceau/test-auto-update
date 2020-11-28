@@ -154,7 +154,7 @@ autoUpdater.on("download-progress", (progressObj) => {
   sendUpdateProgress(progressObj);
 });
 
-autoUpdater.on("update-downloaded", async (info: any) => {
+autoUpdater.on("update-downloaded", async () => {
   sendDownloadComplete();
 
   /*
