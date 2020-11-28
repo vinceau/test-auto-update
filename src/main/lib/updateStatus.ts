@@ -11,6 +11,13 @@ function sendVersionUpdateStatus(status: UpdateStatus, payload?: any) {
   }
 }
 
+export function sendUpdateMessage(message: string) {
+  const window = BrowserWindow.getFocusedWindow();
+  if (window) {
+    window.webContents.send("message", message);
+  }
+}
+
 export function sendNoUpdateAvailable() {
   sendVersionUpdateStatus(UpdateStatus.NO_UPDATE);
 }

@@ -16,6 +16,7 @@ import {
   sendNoUpdateAvailable,
   sendUpdateAvailable,
   sendUpdateError,
+  sendUpdateMessage,
   sendUpdateProgress,
 } from "./updateStatus";
 
@@ -119,11 +120,13 @@ async function checkGithubForUpdates() {
       */
 
 autoUpdater.on("error", (err) => {
+  sendUpdateMessage(`error. payload: ${err.message || err}`);
   log.error(err);
-  sendUpdateError(err.message);
+  sendUpdateError(err.message || err);
 });
 
 autoUpdater.on("update-available", async (info) => {
+  sendUpdateMessage(`update-available. payload: ${JSON.stringify(info, null, 2)}`);
   const { version } = info;
 
   // Only auto-download if it's a patch version
@@ -146,15 +149,19 @@ function enableUpdaterMenu() {
 }
 
 autoUpdater.on("update-not-available", () => {
+  sendUpdateMessage("update not available");
   sendNoUpdateAvailable();
   enableUpdaterMenu();
 });
 
 autoUpdater.on("download-progress", (progressObj) => {
+  sendUpdateMessage(`download progress, ${JSON.stringify(progressObj, null, 2)}`);
+  console.log(`got a download progress message. payload: ${JSON.stringify(progressObj, null, 2)}`);
   sendUpdateProgress(progressObj);
 });
 
-autoUpdater.on("update-downloaded", async () => {
+autoUpdater.on("update-downloaded", async (info) => {
+  sendUpdateMessage(`update download, ${JSON.stringify(info, null, 2)}`);
   sendDownloadComplete();
 
   /*
