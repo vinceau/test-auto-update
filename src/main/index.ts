@@ -12,41 +12,42 @@ import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
 
 import log from "electron-log";
-import { autoUpdater } from "electron-updater";
+import { checkForUpdates } from "./lib/updater";
+// import { autoUpdater } from "electron-updater";
 
-autoUpdater.logger = log;
+// autoUpdater.logger = log;
 
-log.info("App starting...");
+// log.info("App starting...");
 
-(autoUpdater.logger as any).transports.file.level = "info";
+// (autoUpdater.logger as any).transports.file.level = "info";
 
-autoUpdater.on("checking-for-update", () => {
-  sendStatusToWindow("Checking for update...");
-});
-autoUpdater.on("update-available", (info) => {
-  console.log(`update info: `, info);
-  sendStatusToWindow(`Update available: ${JSON.stringify(info)}`);
-  mainWindow!.webContents.send("update_available");
-});
-autoUpdater.on("update-not-available", (info) => {
-  console.log(`update not available info: `, info);
-  sendStatusToWindow(`Update not available: ${JSON.stringify(info)}`);
-});
-autoUpdater.on("error", (err) => {
-  sendStatusToWindow("Error in auto-updater. " + err);
-});
-autoUpdater.on("download-progress", (progressObj) => {
-  sendStatusToWindow(JSON.stringify(progressObj));
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-  log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
-  sendStatusToWindow(log_message);
-});
-autoUpdater.on("update-downloaded", (info) => {
-  console.log(`update downloaded info: `, info);
-  sendStatusToWindow(`Update downloaded: ${JSON.stringify(info)}`);
-  mainWindow!.webContents.send("update_downloaded");
-});
+// autoUpdater.on("checking-for-update", () => {
+//   sendStatusToWindow("Checking for update...");
+// });
+// autoUpdater.on("update-available", (info) => {
+//   console.log(`update info: `, info);
+//   sendStatusToWindow(`Update available: ${JSON.stringify(info)}`);
+//   mainWindow!.webContents.send("update_available");
+// });
+// autoUpdater.on("update-not-available", (info) => {
+//   console.log(`update not available info: `, info);
+//   sendStatusToWindow(`Update not available: ${JSON.stringify(info)}`);
+// });
+// autoUpdater.on("error", (err) => {
+//   sendStatusToWindow("Error in auto-updater. " + err);
+// });
+// autoUpdater.on("download-progress", (progressObj) => {
+//   sendStatusToWindow(JSON.stringify(progressObj));
+//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
+//   log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+//   log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
+//   sendStatusToWindow(log_message);
+// });
+// autoUpdater.on("update-downloaded", (info) => {
+//   console.log(`update downloaded info: `, info);
+//   sendStatusToWindow(`Update downloaded: ${JSON.stringify(info)}`);
+//   mainWindow!.webContents.send("update_downloaded");
+// });
 
 contextMenu();
 
@@ -133,7 +134,7 @@ const startUp = async () => {
 
   // Check for updates on first boot but don't notify
   sendStatusToWindow("checking for updates...");
-  await autoUpdater.checkForUpdates();
+  await checkForUpdates();
   sendStatusToWindow("finished checking for updates!");
 };
 
