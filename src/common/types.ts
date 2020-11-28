@@ -11,6 +11,14 @@ export interface TwitchClip {
   timestamp: Date;
 }
 
+export enum UpdateStatus {
+  NO_UPDATE = "NO_UPDATE",
+  UPDATE_AVAILABLE = "UPDATE_AVAILABLE",
+  DOWNLOAD_PROGRESS = "DOWNLOAD_PROGRESS",
+  DOWNLOAD_COMPLETE = "DOWNLOAD_COMPLETE",
+  UPDATE_ERROR = "UPDATE_ERROR",
+}
+
 export enum Message {
   // renderer to main
   AuthenticateTwitch = "authenticateTwitch",
@@ -19,6 +27,9 @@ export enum Message {
   Notify = "notify",
   SelectDirectory = "selectDirectory",
   ToggleTheme = "toggleTheme",
+
+  // main to renderer
+  VersionUpdateStatus = "versionUpdateStatus",
 }
 
 export type ResponseType<X extends Message> =
@@ -35,6 +46,8 @@ export type ResponseType<X extends Message> =
     ? void // Return nothing to renderer
     : X extends Message.SelectDirectory
     ? string[] // main to renderer
+    : X extends Message.VersionUpdateStatus
+    ? any
     : never;
 
 export type RequestType<X extends Message> =

@@ -1,7 +1,7 @@
 {
   "productName": "Test App",
   "name": "test-auto-update",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "A Melee Automation Framework",
   "license": "MIT",
   "author": {
@@ -22,6 +22,7 @@
     "lint:fix": "yarn run lint --fix"
   },
   "dependencies": {
+    "@octokit/rest": "^18.0.9",
     "@vinceau/event-actions": "^0.0.4",
     "@vinceau/slp-realtime": "^3.0.2",
     "electron-context-menu": "^0.15.1",

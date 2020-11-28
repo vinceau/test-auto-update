@@ -65,7 +65,9 @@ function createMainWindow() {
       nodeIntegration: true, // <--- flag
       nodeIntegrationInWorker: true, // <---  for web workers
     },
+    autoHideMenuBar: true,
   });
+  // window.removeMenu();
 
   // A bit of a hack to allow the renderer window to synchronously get the current theme
   // without waiting for an IPC message
@@ -117,7 +119,7 @@ app.on("activate", () => {
   }
 });
 
-const startUp = () => {
+const startUp = async () => {
   // Create the Application's main menu
   const template = getMenuTemplate(app, process.platform);
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
@@ -130,7 +132,9 @@ const startUp = () => {
   });
 
   // Check for updates on first boot but don't notify
-  autoUpdater.checkForUpdates();
+  sendStatusToWindow("checking for updates...");
+  await autoUpdater.checkForUpdates();
+  sendStatusToWindow("finished checking for updates!");
 };
 
 if (isDevelopment) {

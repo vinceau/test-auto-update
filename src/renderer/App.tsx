@@ -2,6 +2,7 @@ import React from "react";
 
 import pkg from "../../package.json";
 import { ipcRenderer } from "electron";
+import { Message } from "common/types";
 
 export const App: React.FC = () => {
   const [messages, setMessages] = React.useState<string[]>([]);
@@ -26,6 +27,9 @@ export const App: React.FC = () => {
       setNotif("Update Downloaded. It will be installed on restart. Restart now?");
       setShowRestart(true);
       setShowNotif(true);
+    });
+    ipcRenderer.on(Message.VersionUpdateStatus, (_, payload) => {
+      console.log(JSON.stringify(payload, null, 2));
     });
   });
   return (
