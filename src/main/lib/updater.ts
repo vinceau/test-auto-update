@@ -4,7 +4,7 @@
 
 import { MenuItem } from "electron";
 import log from "electron-log";
-import { autoUpdater } from "electron-updater";
+import { autoUpdater } from "@imjs/electron-differential-updater";
 import pkg from "../../../package.json";
 import diff from "semver/functions/diff";
 
