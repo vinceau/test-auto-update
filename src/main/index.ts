@@ -25,12 +25,12 @@ import { checkForUpdates } from "./lib/updater";
 //   sendStatusToWindow("Checking for update...");
 // });
 // autoUpdater.on("update-available", (info) => {
-//   console.log(`update info: `, info);
+//   log.info(`update info: `, info);
 //   sendStatusToWindow(`Update available: ${JSON.stringify(info)}`);
 //   mainWindow!.webContents.send("update_available");
 // });
 // autoUpdater.on("update-not-available", (info) => {
-//   console.log(`update not available info: `, info);
+//   log.info(`update not available info: `, info);
 //   sendStatusToWindow(`Update not available: ${JSON.stringify(info)}`);
 // });
 // autoUpdater.on("error", (err) => {
@@ -44,7 +44,7 @@ import { checkForUpdates } from "./lib/updater";
 //   sendStatusToWindow(log_message);
 // });
 // autoUpdater.on("update-downloaded", (info) => {
-//   console.log(`update downloaded info: `, info);
+//   log.info(`update downloaded info: `, info);
 //   sendStatusToWindow(`Update downloaded: ${JSON.stringify(info)}`);
 //   mainWindow!.webContents.send("update_downloaded");
 // });

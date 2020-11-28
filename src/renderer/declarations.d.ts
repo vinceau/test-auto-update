@@ -11,14 +11,6 @@ declare module "*.md";
 declare module "node-notifier";
 declare module "filename-reserved-regex";
 
-declare module "formatter" {
-  export type Formatter = (ctx: Record<string, any>) => string;
-
-  const defaultFormatterExport: (str: string) => Formatter;
-
-  export default defaultFormatterExport;
-}
-
 declare const __VERSION__: string;
 declare const __DATE__: string;
 declare const __BUILD__: string;

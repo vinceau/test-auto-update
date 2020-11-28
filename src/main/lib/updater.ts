@@ -36,7 +36,7 @@ async function startUpdateCheck(backgroundCheck?: boolean): Promise<void> {
   const autoUpdatesEnabled = process.platform === "win32" && !isDevelopment;
 
   if (autoUpdatesEnabled) {
-    console.log("On windows so using built in auto updater...");
+    log.info("On windows so using built in auto updater...");
     await autoUpdater.checkForUpdates();
   } else {
     await checkGithubForUpdates();
@@ -72,7 +72,7 @@ async function checkGithubForUpdates() {
 /*
   public onError(err: any, title = "Error: ") {
     log.error(err);
-    console.log(title, err);
+    log.info(title, err);
     // if (this.giveFeedback) {
     //   dialog.showErrorBox(title, err === null ? "unknown" : (err.stack || err).toString());
     // }
@@ -91,12 +91,12 @@ async function checkGithubForUpdates() {
   }
 
   private _githubUpdateAvailable(version: string) {
-    console.log(`showing github update message... ${version}`);
+    log.info(`showing github update message... ${version}`);
     if (!this.giveFeedback) {
-      console.log("jk give feedback is false");
+      log.info("jk give feedback is false");
       return;
     }
-    console.log("showing github update message...");
+    log.info("showing github update message...");
     const win = BrowserWindow.getFocusedWindow();
     if (!win) {
       return;
@@ -156,7 +156,7 @@ autoUpdater.on("update-not-available", () => {
 
 autoUpdater.on("download-progress", (progressObj) => {
   sendUpdateMessage(`download progress, ${JSON.stringify(progressObj, null, 2)}`);
-  console.log(`got a download progress message. payload: ${JSON.stringify(progressObj, null, 2)}`);
+  log.info(`got a download progress message. payload: ${JSON.stringify(progressObj, null, 2)}`);
   sendUpdateProgress(progressObj);
 });
 
@@ -181,7 +181,7 @@ autoUpdater.on("update-downloaded", async (info) => {
 });
 
 export async function checkForUpdates(giveFeedback?: boolean) {
-  console.log(`calling checkForUpdates. giveFeedback?: ${giveFeedback}`);
+  log.info(`calling checkForUpdates. giveFeedback?: ${giveFeedback}`);
   try {
     await startUpdateCheck();
   } catch (err) {
@@ -190,7 +190,7 @@ export async function checkForUpdates(giveFeedback?: boolean) {
 }
 
 export async function checkForUpdatesFromMenu(menuItem: MenuItem) {
-  console.log("calling checkForUpdatesFromMenu");
+  log.info("calling checkForUpdatesFromMenu");
   updater = menuItem;
   updater.label = "Checking for updates...";
   updater.enabled = false;

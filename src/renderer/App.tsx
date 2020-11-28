@@ -16,6 +16,7 @@ export const App: React.FC = () => {
 
   React.useEffect(() => {
     ipcRenderer.on("message", (_, text) => {
+      console.log(`received message from main: ${text}`);
       const x = JSON.stringify(text);
       setMessages([...messages, x]);
     });
@@ -29,7 +30,7 @@ export const App: React.FC = () => {
       setShowNotif(true);
     });
     ipcRenderer.on(Message.VersionUpdateStatus, (_, payload) => {
-      console.log(JSON.stringify(payload, null, 2));
+      console.log("received version update status message from main: " + JSON.stringify(payload, null, 2));
     });
   });
   return (
