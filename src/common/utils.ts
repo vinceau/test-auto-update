@@ -1,6 +1,5 @@
 import fs from "fs-extra";
 import path from "path";
-import filenamify from "filenamify";
 import filenameReservedRegex from "filename-reserved-regex";
 
 import { EOL } from "os";
@@ -114,12 +113,6 @@ export const secondsToFrames = (secs: number): number => {
 
 export const millisToFrames = (ms: number): number => {
   return secondsToFrames(ms / 1000);
-};
-
-export const sanitizeFilename = (name: string, replacement = "."): string => {
-  return filenamify(name, {
-    replacement,
-  });
 };
 
 export const invalidFilename = (name: string, options?: { allowPaths?: boolean }): boolean => {
