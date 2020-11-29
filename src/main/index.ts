@@ -10,10 +10,12 @@ import { isDevelopment } from "../common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
+import { checkForUpdates } from "./lib/updater";
 
-import log from "electron-log";
-import { autoUpdater } from "electron-updater";
+// import log from "electron-log";
+// import { autoUpdater } from "electron-updater";
 
+/*
 autoUpdater.logger = log;
 
 log.info("App starting...");
@@ -47,16 +49,19 @@ autoUpdater.on("update-downloaded", (info) => {
   sendStatusToWindow(`Update downloaded: ${JSON.stringify(info)}`);
   mainWindow!.webContents.send("update_downloaded");
 });
+*/
 
 contextMenu();
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: BrowserWindow | null;
 
+/*
 function sendStatusToWindow(text: string) {
   log.info(text);
   mainWindow!.webContents.send("message", text);
 }
+*/
 
 function createMainWindow() {
   const window = new BrowserWindow({
@@ -130,7 +135,8 @@ const startUp = () => {
   });
 
   // Check for updates on first boot but don't notify
-  autoUpdater.checkForUpdates();
+  // autoUpdater.checkForUpdates();
+  checkForUpdates();
 };
 
 if (isDevelopment) {
