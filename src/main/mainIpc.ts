@@ -14,6 +14,11 @@ export const setupIPC = (app: App, window: BrowserWindow): IPC => {
     app.quit();
   });
 
+  ipcMain.on("check_updates", () => {
+    console.log("received check update request from renderer");
+    autoUpdater.checkForUpdates();
+  });
+
   ipcMain.on("restart_app", () => {
     autoUpdater.quitAndInstall();
   });

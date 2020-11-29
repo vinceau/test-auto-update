@@ -18,10 +18,13 @@ autoUpdater.logger = log;
 log.info("App starting...");
 
 function sendStatusToWindow(text: string) {
+  console.log("sending status to window");
   log.info(text);
   const win = BrowserWindow.getFocusedWindow();
   if (win) {
     win.webContents.send("message", text);
+  } else {
+    console.log("no window found");
   }
 }
 
@@ -51,6 +54,7 @@ autoUpdater.on("update-downloaded", (info: any) => {
 });
 
 export function checkForUpdates() {
+  sendStatusToWindow("checking for updates now....");
   autoUpdater.checkForUpdates();
 }
 
