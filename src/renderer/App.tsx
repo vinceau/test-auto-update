@@ -13,13 +13,17 @@ export const App: React.FC = () => {
     ipcRenderer.send("restart_app");
   };
 
+  const startDownload = () => {
+    ipcRenderer.send("start_download");
+  };
+
   React.useEffect(() => {
     ipcRenderer.on("message", (_, text) => {
       const x = JSON.stringify(text);
       setMessages([...messages, x]);
     });
     ipcRenderer.once("update_available", () => {
-      setNotif("A new update is available. Downloading now...");
+      setNotif("A new update is available. Start download?");
       setShowNotif(true);
     });
     ipcRenderer.once("update_downloaded", () => {
@@ -36,6 +40,7 @@ export const App: React.FC = () => {
         <button id="close-button" onClick={closeNotification}>
           Close
         </button>
+        <button onClick={startDownload}>Start download</button>
         <button id="restart-button" onClick={restartApp} className={showRestart ? "" : "hidden"}>
           Restart
         </button>

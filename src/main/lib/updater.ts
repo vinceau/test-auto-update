@@ -9,14 +9,15 @@
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
 
-import { dialog, MenuItem } from "electron";
+import { BrowserWindow, dialog, MenuItem } from "electron";
 // import { getStatic } from "./notifications";
 import { autoUpdater } from "electron-updater";
+import log from "electron-log";
 
 // const iconPath = getStatic("/images/icon@32.png");
 
 let updater: MenuItem | null;
-// autoUpdater.autoDownload = false;
+autoUpdater.autoDownload = false;
 
 /*
 autoUpdater.on("error", (error) => {
@@ -39,6 +40,40 @@ autoUpdater.on("update-available", async () => {
   }
 });
 */
+
+autoUpdater.logger = log;
+
+log.info("App starting...");
+
+(autoUpdater.logger as any).transports.file.level = "info";
+
+autoUpdater.on("checking-for-update", () => {
+  sendStatusToWindow("Checking for update...");
+});
+autoUpdater.on("update-available", (info) => {
+  console.log(`update info: `, info);
+  sendStatusToWindow(`Update available: ${JSON.stringify(info)}`);
+  sendMessage("update_available");
+});
+autoUpdater.on("update-not-available", (info) => {
+  console.log(`update not available info: `, info);
+  sendStatusToWindow(`Update not available: ${JSON.stringify(info)}`);
+});
+autoUpdater.on("error", (err) => {
+  sendStatusToWindow("Error in auto-updater. " + err);
+});
+autoUpdater.on("download-progress", (progressObj) => {
+  sendStatusToWindow(JSON.stringify(progressObj));
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")";
+  sendStatusToWindow(log_message);
+});
+autoUpdater.on("update-downloaded", (info) => {
+  console.log(`update downloaded info: `, info);
+  sendStatusToWindow(`Update downloaded: ${JSON.stringify(info)}`);
+  sendMessage("update_downloaded");
+});
 
 autoUpdater.on("update-not-available", async () => {
   if (updater) {
@@ -76,8 +111,35 @@ autoUpdater.on("update-downloaded", async (info: any) => {
 });
 
 // export this to MenuItem click callback
-export function checkForUpdates(menuItem: MenuItem) {
+export function checkForUpdatesFromMenu(menuItem: MenuItem) {
   updater = menuItem;
   updater.enabled = false;
   autoUpdater.checkForUpdates();
+}
+
+function sendStatusToWindow(text: string) {
+  log.info(text);
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    win.webContents.send("message", text);
+  }
+}
+
+function sendMessage(messageName: string) {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    win.webContents.send(messageName);
+  }
+}
+
+export function checkForUpdates() {
+  autoUpdater.checkForUpdates();
+}
+
+export function startDownload() {
+  autoUpdater.downloadUpdate();
+}
+
+export function installAndRestart() {
+  autoUpdater.quitAndInstall();
 }
