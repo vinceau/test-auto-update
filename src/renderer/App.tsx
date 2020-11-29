@@ -34,7 +34,7 @@ export const App: React.FC = () => {
   });
   return (
     <div>
-      <h1>Hello world! This is me!</h1>
+      <h1>Sup</h1>
       <div id="notification" className={showNotif ? "" : "hidden"}>
         <p id="message">{notif}</p>
         <button id="close-button" onClick={closeNotification}>
