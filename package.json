@@ -85,6 +85,13 @@
         "nsis"
       ]
     },
+    "nsis": {
+      "artifactName": "Test-App-Setup-${version}.${ext}",
+      "perMachine": true,
+      "include": "./build/installer.nsh",
+      "warningsAsErrors": false,
+      "allowElevation": true
+    },
     "linux": {
       "target": [
         "AppImage"
