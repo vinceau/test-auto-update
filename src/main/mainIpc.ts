@@ -1,6 +1,6 @@
 import { App, BrowserWindow, ipcMain } from "electron";
 
-// import { autoUpdater } from "electron-updater";
+import { autoUpdater } from "electron-updater";
 
 import { IPC } from "common/ipc";
 
@@ -14,9 +14,9 @@ export const setupIPC = (app: App, window: BrowserWindow): IPC => {
     app.quit();
   });
 
-  // ipcMain.on("restart_app", () => {
-  //   autoUpdater.quitAndInstall();
-  // });
+  ipcMain.on("restart_app", () => {
+    autoUpdater.quitAndInstall();
+  });
 
   return new IPC(ipcMain, () => window.webContents);
 };
